@@ -80,7 +80,7 @@ namespace Операционные_системы._Практика_1
             Directory.Delete(sourceFolder, true);
             Directory.Delete(targetFolder, true);
 
-            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            Console.WriteLine("Удалить файлы?: 1 - да, 0 - нет"); 
             string Check3 = Console.ReadLine(); 
             if (Check3 == "1") 
             { 
@@ -124,7 +124,7 @@ namespace Операционные_системы._Практика_1
             {
                 Console.WriteLine(stream.ReadToEnd());
             }
-            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            Console.WriteLine("Удалить файл?: 1 - да, 0 - нет"); 
             string Check3 = Console.ReadLine(); 
             if (Check3 == "1") 
             { 
@@ -139,7 +139,7 @@ namespace Операционные_системы._Практика_1
             {
                 var tom = new Person {Name = "Tom", Age = 35};
                 await JsonSerializer.SerializeAsync(fs, tom);
-                Console.WriteLine("Data has been saved to file");
+                Console.WriteLine("Данные сохранены в файл");
             }
 
             // чтение данных
@@ -148,7 +148,7 @@ namespace Операционные_системы._Практика_1
                 var restoredPerson = await JsonSerializer.DeserializeAsync<Person>(fs);
                 Console.WriteLine($"Name: {restoredPerson.Name}  Age: {restoredPerson.Age}");
             }
-            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            Console.WriteLine("Удалить файл?: 1 - да, 0 - нет"); 
             string Check3 = Console.ReadLine(); 
             if (Check3 == "1") 
             { 
@@ -159,14 +159,14 @@ namespace Операционные_системы._Практика_1
 
         private static void WorkWithFile()
         {
-            Console.Write("Enter string that will be saved in file > ");
+            Console.Write("Введите строчку которая будет сохранена в файл > ");
             var text = Console.ReadLine();
 
             using (var fStream = new FileStream("note.txt", FileMode.OpenOrCreate))
             {
                 var array = Encoding.Default.GetBytes(text);
                 fStream.Write(array, 0, array.Length);
-                Console.WriteLine("Text wrote");
+                Console.WriteLine("Текст записан в файл");
             }
 
             // чтение из файла
@@ -175,9 +175,9 @@ namespace Операционные_системы._Практика_1
                 var array = new byte[fStream.Length];
                 fStream.Read(array, 0, array.Length);
                 var textFromFile = Encoding.Default.GetString(array);
-                Console.WriteLine($"Text from file: {textFromFile}");
+                Console.WriteLine($"Текст из файла: {textFromFile}");
             }
-            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            Console.WriteLine("Удалить файл?: 1 - да, 0 - нет"); 
             string Check3 = Console.ReadLine(); 
             if (Check3 == "1") 
             { 
@@ -192,14 +192,14 @@ namespace Операционные_системы._Практика_1
 
             foreach (var drive in drives)
             {
-                Console.WriteLine($"Name: {drive.Name}");
-                Console.WriteLine($"Type: {drive.DriveType}");
+                Console.WriteLine($"Имя: {drive.Name}");
+                Console.WriteLine($"Тип: {drive.DriveType}");
                 if (drive.IsReady)
                 {
-                    Console.WriteLine($"Capaity of disk: {drive.TotalSize}");
-                    Console.WriteLine($"Free data: {drive.TotalFreeSpace}");
-                    Console.WriteLine($"Mark: {drive.VolumeLabel}");
-                    Console.WriteLine($"Format fo drive: {drive.DriveFormat}");
+                    Console.WriteLine($"Объем диска: {drive.TotalSize}");
+                    Console.WriteLine($"Свободное пространство: {drive.TotalFreeSpace}");
+                    Console.WriteLine($"Метка: {drive.VolumeLabel}");
+                    Console.WriteLine($"Формат диска: {drive.DriveFormat}");
                 }
 
                 Console.WriteLine();
