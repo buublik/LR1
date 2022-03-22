@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -26,17 +26,35 @@ namespace Операционные_системы._Практика_1
     {
         private static async Task Main(string[] args)
         {
-            CheckDriveInfo(); //1. Вывести информацию в консоль о логических дисках, именах, метке тома, размере типе файловой системы.
+            while (true){
+                Console.Write("1. Вывести информацию в консоль о логических дисках, именах, метке тома, размере типе файловой системы.\n");
+                Console.Write("2. Работа с файлами\n");
+                Console.Write("3. Работа с форматом JSON\n");
+                Console.Write("4. Работа с форматом XML\n");
+                Console.Write("5. Создание zip архива, добавление туда файла, определение размера архива\n");
+                string Status = Console.ReadLine(); 
 
-            WorkWithFile(); //2. Работа с файлами
 
-            await WorkWithJson(); //3. Работа с форматом JSON
+                switch(Status) {
+                    case "1":        
+                        CheckDriveInfo(); //1. Вывести информацию в консоль о логических дисках, именах, метке тома, размере типе файловой системы.
+                        break;
+                    case "2":
+                        WorkWithFile(); //2. Работа с файлами
+                        break;
+                    case "3":
+                        await WorkWithJson(); //3. Работа с форматом JSON
+                        break;
+                    case "4":
+                        WorkWithXml(); //4. Работа с форматом XML
+                        break;
+                    case "5":
+                        WorkWithZip(); //5. Создание zip архива, добавление туда файла, определение размера архива
+                        break;
 
-            WorkWithXml(); //4. Работа с форматом XML
 
-            WorkWithZip(); //5. Создание zip архива, добавление туда файла, определение размера архива
-
-            Console.ReadLine();
+                }
+            }
         }
 
         private static void WorkWithZip()
@@ -61,7 +79,14 @@ namespace Операционные_системы._Практика_1
             Console.WriteLine($"Файл {zipFile} распакован в папку {targetFolder}");
             Directory.Delete(sourceFolder, true);
             Directory.Delete(targetFolder, true);
-            File.Delete(zipFile);
+
+            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            string Check3 = Console.ReadLine(); 
+            if (Check3 == "1") 
+            { 
+                    File.Delete(zipFile);
+                    Console.WriteLine();
+            }
         }
 
         private static void WorkWithXml()
@@ -99,8 +124,13 @@ namespace Операционные_системы._Практика_1
             {
                 Console.WriteLine(stream.ReadToEnd());
             }
-
-            File.Delete("users.xml");
+            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            string Check3 = Console.ReadLine(); 
+            if (Check3 == "1") 
+            { 
+                    File.Delete("users.xml");
+                    Console.WriteLine();
+            }
         }
 
         private static async Task WorkWithJson()
@@ -118,18 +148,25 @@ namespace Операционные_системы._Практика_1
                 var restoredPerson = await JsonSerializer.DeserializeAsync<Person>(fs);
                 Console.WriteLine($"Name: {restoredPerson.Name}  Age: {restoredPerson.Age}");
             }
+            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            string Check3 = Console.ReadLine(); 
+            if (Check3 == "1") 
+            { 
+                    File.Delete("user.json");
+                    Console.WriteLine();
+            }
         }
 
         private static void WorkWithFile()
         {
-            Console.Write("Введите строку для записи в файл> ");
+            Console.Write("Enter string that will be saved in file > ");
             var text = Console.ReadLine();
 
             using (var fStream = new FileStream("note.txt", FileMode.OpenOrCreate))
             {
                 var array = Encoding.Default.GetBytes(text);
                 fStream.Write(array, 0, array.Length);
-                Console.WriteLine("Текст записан в файл");
+                Console.WriteLine("Text wrote");
             }
 
             // чтение из файла
@@ -138,11 +175,15 @@ namespace Операционные_системы._Практика_1
                 var array = new byte[fStream.Length];
                 fStream.Read(array, 0, array.Length);
                 var textFromFile = Encoding.Default.GetString(array);
-                Console.WriteLine($"Текст из файла: {textFromFile}");
+                Console.WriteLine($"Text from file: {textFromFile}");
             }
-
-            File.Delete("note.txt");
-            Console.WriteLine();
+            Console.WriteLine("Delete files: 1 - да, 0 - нет"); 
+            string Check3 = Console.ReadLine(); 
+            if (Check3 == "1") 
+            { 
+                    File.Delete("note.txt");
+                    Console.WriteLine();
+            }
         }
 
         private static void CheckDriveInfo()
@@ -151,14 +192,14 @@ namespace Операционные_системы._Практика_1
 
             foreach (var drive in drives)
             {
-                Console.WriteLine($"Название: {drive.Name}");
-                Console.WriteLine($"Тип: {drive.DriveType}");
+                Console.WriteLine($"Name: {drive.Name}");
+                Console.WriteLine($"Type: {drive.DriveType}");
                 if (drive.IsReady)
                 {
-                    Console.WriteLine($"Объем диска: {drive.TotalSize}");
-                    Console.WriteLine($"Свободное пространство: {drive.TotalFreeSpace}");
-                    Console.WriteLine($"Метка: {drive.VolumeLabel}");
-                    Console.WriteLine($"Формат диска: {drive.DriveFormat}");
+                    Console.WriteLine($"Capaity of disk: {drive.TotalSize}");
+                    Console.WriteLine($"Free data: {drive.TotalFreeSpace}");
+                    Console.WriteLine($"Mark: {drive.VolumeLabel}");
+                    Console.WriteLine($"Format fo drive: {drive.DriveFormat}");
                 }
 
                 Console.WriteLine();
